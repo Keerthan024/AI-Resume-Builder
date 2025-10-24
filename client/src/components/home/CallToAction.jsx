@@ -158,7 +158,7 @@ const CallToAction = () => {
                     🚀 No credit card required
                   </p>
                   <p className="text-blue-300 text-xs">
-                    Free forever plan • 30+ templates
+                    Free forever plan
                   </p>
                 </motion.div>
               </motion.div>

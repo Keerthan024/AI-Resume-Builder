@@ -7,13 +7,13 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
     const templates = [
         {
             id: "classic",
-            name: "Classic",
-            preview: "A clean, traditional resume format with clear sections and professional typography"
+            name: "Classic(Experienced)",
+            preview: "A clean, traditional resume format for internship and Experience."
         },
         {
             id: "modern",
-            name: "Modern",
-            preview: "Sleek design with strategic use of color and modern font choices"
+            name: "Classic",
+            preview: "Sleek design with strategic use of color resume format for internship."
         },
         {
             id: "minimal-image",
@@ -25,11 +25,6 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
             name: "Minimal",
             preview: "Ultra-clean design that puts your content front and center"
         },
-        {
-            id: "keerthan-template",
-            name: "Professional",
-            preview: "Clean professional layout with accent colors and well-organized sections"
-        }
     ]
 
     return (

@@ -5,22 +5,70 @@ import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
+import cookieParser from "cookie-parser";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import hpp from "hpp";
+import compression from "compression";
 
+// --- Create Express App ---
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Database connection
-await connectDB()
+// --- Security Middlewares ---
+app.use(helmet());        // sets secure HTTP headers
+app.use(hpp());           // prevent HTTP Parameter Pollution
+app.use(compression());   // gzip compression
+app.use(cookieParser());  // parse cookies
 
-app.use(express.json())
-app.use(cors())
+// --- Body Parser ---
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res)=> res.send("Server is live..."))
-app.use('/api/users', userRouter)
-app.use('/api/resumes', resumeRouter)
-app.use('/api/ai', aiRouter)
+// --- Rate Limiter ---
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,                 // limit each IP to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false
+});
+app.use(limiter);
 
-app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`);
-    
+// --- CORS Configuration ---
+const allowedOrigins = (process.env.CORS_ORIGINS || "").split(",").filter(Boolean);
+app.use(cors({
+  origin: function(origin, callback){
+      if(!origin) return callback(null, true); // allow Postman / server-side requests
+      if(allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
+}));
+
+// --- Database Connection ---
+await connectDB();
+
+// --- Routes ---
+app.get("/", (req, res) => res.send("Server is live..."));
+app.use("/api/users", userRouter);
+app.use("/api/resumes", resumeRouter);
+app.use("/api/ai", aiRouter);
+
+// --- 404 Handler ---
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
+// --- Global Error Handling Middleware ---
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error"
+  });
+});
+
+// --- Start Server ---
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

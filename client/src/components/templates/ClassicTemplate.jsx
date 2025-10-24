@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Globe, Github } from "lucide-react";
 
 const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -11,36 +11,42 @@ const ClassicTemplate = ({ data, accentColor }) => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
+        <div className="max-w-4xl mx-auto p-5 bg-white text-gray-800 leading-relaxed">
             {/* Header */}
-            <header className="text-center mb-8 pb-6 border-b-2" style={{ borderColor: accentColor }}>
-                <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
+            <header className="text-center mb-0.5 pb-4 border-b-2" style={{ borderColor: accentColor }}>
+                <h1 className="text-2xl font-bold mb-0.5" style={{ color: accentColor }}>
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
 
-                <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                    {data.personal_info?.email && (
-                        <div className="flex items-center gap-1">
-                            <Mail className="size-4" />
-                            <span>{data.personal_info.email}</span>
-                        </div>
-                    )}
+                <div className="flex flex-wrap justify-center gap-3 text-sm text-gray-600">
                     {data.personal_info?.phone && (
                         <div className="flex items-center gap-1">
                             <Phone className="size-4" />
                             <span>{data.personal_info.phone}</span>
                         </div>
                     )}
-                    {data.personal_info?.location && (
+                    {data.personal_info?.email && (
                         <div className="flex items-center gap-1">
-                            <MapPin className="size-4" />
-                            <span>{data.personal_info.location}</span>
+                            <Mail className="size-4" />
+                            <span>{data.personal_info.email}</span>
+                        </div>
+                    )}
+                    {data.personal_info?.github && (
+                        <div className="flex items-center gap-1">
+                            <Github className="size-4" />
+                            <span>{data.personal_info.github}</span>
                         </div>
                     )}
                     {data.personal_info?.linkedin && (
                         <div className="flex items-center gap-1">
                             <Linkedin className="size-4" />
-                            <span className="break-all">{data.personal_info.linkedin}</span>
+                            <span>{data.personal_info.linkedin}</span>
+                        </div>
+                    )}
+                    {data.personal_info?.location && (
+                        <div className="flex items-center gap-1">
+                            <MapPin className="size-4" />
+                            <span className="break-all">{data.personal_info.location}</span>
                         </div>
                     )}
                     {data.personal_info?.website && (
@@ -52,33 +58,35 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </div>
             </header>
 
-            {/* Professional Summary */}
+            {/* 1. Professional Summary */}
             {data.professional_summary && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-0.5" style={{ color: accentColor }}>
                         PROFESSIONAL SUMMARY
                     </h2>
                     <p className="text-gray-700 leading-relaxed">{data.professional_summary}</p>
                 </section>
             )}
 
-            {/* Experience */}
+            {/* 2. Professional Experience */}
             {data.experience && data.experience.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
                         PROFESSIONAL EXPERIENCE
                     </h2>
 
                     <div className="space-y-4">
                         {data.experience.map((exp, index) => (
                             <div key={index} className="border-l-3 pl-4" style={{ borderColor: accentColor }}>
-                                <div className="flex justify-between items-start mb-2">
+                                <div className="flex justify-between items-start mb-1">
                                     <div>
                                         <h3 className="font-semibold text-gray-900">{exp.position}</h3>
                                         <p className="text-gray-700 font-medium">{exp.company}</p>
                                     </div>
                                     <div className="text-right text-sm text-gray-600">
-                                        <p>{formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}</p>
+                                        <p>
+                                            {formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}
+                                        </p>
                                     </div>
                                 </div>
                                 {exp.description && (
@@ -92,10 +100,27 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Projects */}
+            {/* 3. Skills */}
+            {data.skills && data.skills.length > 0 && (
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
+                        CORE SKILLS
+                    </h2>
+
+                    <div className="flex gap-2 flex-wrap">
+                        {data.skills.map((skill, index) => (
+                            <div key={index} className="text-gray-700">
+                                • {skill}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* 4. Projects */}
             {data.project && data.project.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
                         PROJECTS
                     </h2>
 
@@ -112,14 +137,14 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Education */}
+            {/* 5. Education */}
             {data.education && data.education.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-0.5" style={{ color: accentColor }}>
                         EDUCATION
                     </h2>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {data.education.map((edu, index) => (
                             <div key={index} className="flex justify-between items-start">
                                 <div>
@@ -138,24 +163,60 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Skills */}
-            {data.skills && data.skills.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
-                        CORE SKILLS
+            {/* 6. Achievements */}
+            {data.achievement && data.achievement.length > 0 && (
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
+                        ACHIEVEMENTS
                     </h2>
-
-                    <div className="flex gap-4 flex-wrap">
-                        {data.skills.map((skill, index) => (
-                            <div key={index} className="text-gray-700">
-                                • {skill}
-                            </div>
+                    <ul className="space-y-2">
+                        {data.achievement.map((ach, index) => (
+                            <li key={index} className="text-gray-700">
+                                <span className="font-medium text-gray-900">{ach.title}</span>
+                                {ach.date && <span className="text-gray-600 text-sm"> — {formatDate(ach.date)}</span>}
+                                {ach.description && <p className="text-gray-600">{ach.description}</p>}
+                            </li>
                         ))}
-                    </div>
+                    </ul>
+                </section>
+            )}
+
+            {/* 7. Certifications */}
+            {data.certification && data.certification.length > 0 && (
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
+                        CERTIFICATIONS
+                    </h2>
+                    <ul className="space-y-2">
+                        {data.certification.map((cert, index) => (
+                            <li key={index} className="text-gray-700">
+                                <span className="font-medium text-gray-900">{cert.name}</span>
+                                {cert.issuing_organization && (
+                                    <span className="text-gray-600"> — {cert.issuing_organization}</span>
+                                )}
+                                {(cert.issue_date || cert.expiration_date) && (
+                                    <p className="text-sm text-gray-600">
+                                        {cert.issue_date && `Issued: ${formatDate(cert.issue_date)} `}
+                                        {cert.expiration_date && ` | Expires: ${formatDate(cert.expiration_date)}`}
+                                    </p>
+                                )}
+                                {cert.credential_url && (
+                                    <a
+                                        href={cert.credential_url}
+                                        className="text-blue-600 text-sm underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        View Credential
+                                    </a>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
                 </section>
             )}
         </div>
     );
-}
+};
 
 export default ClassicTemplate;

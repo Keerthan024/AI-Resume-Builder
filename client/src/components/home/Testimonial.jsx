@@ -62,13 +62,6 @@ const Testimonial = () => {
         }
     ];
 
-    const stats = [
-        { number: '10K+', label: 'Success Stories', icon: <Users className="w-5 h-5" /> },
-        { number: '4.9/5', label: 'Average Rating', icon: <Star className="w-5 h-5" /> },
-        { number: '98%', label: 'Interview Rate', icon: <TrendingUp className="w-5 h-5" /> },
-        { number: '2.3x', label: 'More Interviews', icon: <Award className="w-5 h-5" /> }
-    ];
-
     const TestimonialCard = ({ testimonial, index }) => (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -143,31 +136,7 @@ const Testimonial = () => {
                     />
                 </div>
 
-                {/* Stats Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-                >
-                    {stats.map((stat, index) => (
-                        <motion.div
-                            key={stat.label}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                            className="text-center p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-100"
-                        >
-                            <div className="flex justify-center mb-3">
-                                <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg">
-                                    {stat.icon}
-                                </div>
-                            </div>
-                            <div className="text-2xl font-bold text-blue-600 mb-1">{stat.number}</div>
-                            <div className="text-sm text-slate-600 font-medium">{stat.label}</div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                
 
                 {/* Testimonials Marquee */}
                 <div className="relative">

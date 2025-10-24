@@ -39,23 +39,23 @@ const Contact = () => {
     {
       icon: <Mail className="w-5 h-5" />,
       title: 'Email Us',
-      details: 'hello@resumecraft.com',
-      link: 'mailto:hello@resumecraft.com',
-      description: 'Send us an email anytime'
+      details: 'hello@krytil.com',
+      link: 'mailto:hello@krytil.com',
+      description: 'Send us an email anytime.'
     },
     {
       icon: <Phone className="w-5 h-5" />,
       title: 'Call Us',
-      details: '+1 (555) 123-4567',
-      link: 'tel:+15551234567',
+      details: '+91 9663515839',
+      link: 'tel:+91 9663515839',
       description: 'Mon to Fri, 9am to 6pm'
     },
     {
       icon: <MapPin className="w-5 h-5" />,
       title: 'Visit Us',
-      details: 'San Francisco, CA',
-      link: 'https://maps.google.com/?q=San+Francisco,CA',
-      description: 'Feel free to visit our office'
+      details: 'Bengaluru',
+      link: '',
+      description: 'Feel free to contact our office.'
     }
   ];
 
@@ -63,7 +63,7 @@ const Contact = () => {
     {
       icon: <Clock className="w-5 h-5" />,
       title: 'Quick Response',
-      description: 'We typically reply within 2 hours during business hours'
+      description: 'We typically reply within 24 hours.'
     },
     {
       icon: <MessageCircle className="w-5 h-5" />,
@@ -200,25 +200,6 @@ const Contact = () => {
                 </motion.div>
               ))}
             </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="grid grid-cols-3 gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-100"
-            >
-              {[
-                { number: '24h', label: 'Avg Response' },
-                { number: '100%', label: 'Satisfaction' },
-                { number: '500+', label: 'Helped Today' }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-lg font-bold text-blue-600">{stat.number}</div>
-                  <div className="text-xs text-slate-500 mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Contact Form */}
@@ -287,6 +268,21 @@ const Contact = () => {
                         required
                         className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 bg-white/50 backdrop-blur-sm"
                         placeholder="Enter your email"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="phone"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                        placeholder="Enter your phone Number"
                       />
                     </div>
                   </div>

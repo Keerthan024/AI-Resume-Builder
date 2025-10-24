@@ -1,14 +1,37 @@
 import express from "express";
 import protect from "../middlewares/authMiddleware.js";
-import { enhanceJobDescription, enhanceProfessionalSummary, uploadResume} from "../controllers/aiController.js";
-
-
+import { body } from "express-validator";
+import {
+  enhanceJobDescription,
+  enhanceProfessionalSummary,
+  uploadResume
+} from "../controllers/aiController.js";
 
 const aiRouter = express.Router();
 
+// --- Enhance Professional Summary ---
+aiRouter.post(
+  "/enhance-pro-sum",
+  protect,
+  body("userContent").trim().notEmpty().withMessage("userContent is required"),
+  enhanceProfessionalSummary
+);
 
-aiRouter.post('/enhance-pro-sum', protect, enhanceProfessionalSummary)
-aiRouter.post('/enhance-job-desc', protect, enhanceJobDescription)
-aiRouter.post('/upload-resume', protect, uploadResume)
+// --- Enhance Job Description ---
+aiRouter.post(
+  "/enhance-job-desc",
+  protect,
+  body("userContent").trim().notEmpty().withMessage("userContent is required"),
+  enhanceJobDescription
+);
 
-export default aiRouter
+// --- Upload Resume ---
+aiRouter.post(
+  "/upload-resume",
+  protect,
+  body("resumeText").trim().notEmpty().withMessage("resumeText is required"),
+  body("title").optional().trim(),
+  uploadResume
+);
+
+export default aiRouter;

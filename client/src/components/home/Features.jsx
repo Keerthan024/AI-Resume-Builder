@@ -63,17 +63,6 @@ const Features = () => {
             image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop",
             benefits: ["Professional feedback", "Industry insights", "24h turnaround"]
         },
-        {
-            icon: <Rocket className="size-6" />,
-            title: "Instant Job Matching",
-            description: "Our AI matches your resume with relevant job openings and suggests optimizations for each role.",
-            color: "blue",
-            gradient: "from-blue-600 to-indigo-600",
-            bg: "bg-blue-50",
-            border: "border-blue-200",
-            image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=500&h=400&fit=crop",
-            benefits: ["Job matching", "Role optimization", "Salary insights"]
-        }
     ];
 
     const stats = [

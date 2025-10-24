@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
@@ -8,10 +8,6 @@ const Hero = () => {
   const { user } = useSelector((state) => state.auth);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  useEffect(() => {
-    // Any initialization logic can go here
-  }, []);
-
   const logos = [
     "https://saasly.prebuiltui.com/assets/companies-logo/instagram.svg",
     "https://saasly.prebuiltui.com/assets/companies-logo/framer.svg",
@@ -20,30 +16,10 @@ const Hero = () => {
     "https://saasly.prebuiltui.com/assets/companies-logo/walmart.svg",
   ];
 
-  const floatingAnimation = {
-    animate: {
-      y: [0, -15, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
+  // Animation variants
   const fadeInUp = {
-    hidden: { y: 60, opacity: 0 },
-    show: {
+    initial: { y: 60, opacity: 0 },
+    animate: {
       y: 0,
       opacity: 1,
       transition: {
@@ -53,14 +29,55 @@ const Hero = () => {
     },
   };
 
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const floatingAnimation = {
+    animate: {
+      y: [0, -20, 0],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <>
       <div className="min-h-screen pb-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50/30 overflow-hidden relative">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-20 animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-sky-200 to-blue-200 rounded-full blur-3xl opacity-10"></div>
+          <motion.div
+            className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-20"
+            animate={{
+              scale: [1.1, 1, 1.1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
         </div>
 
         {/* Navbar */}
@@ -68,30 +85,36 @@ const Hero = () => {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="z-50 flex items-center justify-between w-full py-6 px-6 md:px-16 lg:px-24 xl:px-40 text-sm bg-white/80 backdrop-blur-md border-b border-blue-100 sticky top-0"
+          className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm bg-white/80 backdrop-blur-md border-b border-blue-100 sticky top-0"
         >
+          {/* Logo */}
           <Link to="/">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-0"
             >
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-                <span className="text-white font-bold text-lg">R</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">
-                ResumeCraft
-              </span>
+              <img
+                src="/favicon.svg"
+                alt="Logo"
+                className="h-10 w-auto md:h-8 lg:h-14"
+              />
+              <img
+                src="/logo.svg"
+                alt="Logo"
+                className="h-5 w-auto md:h-8 lg:h-10"
+              />
             </motion.div>
           </Link>
 
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8 transition duration-500 text-slate-700">
-            {["Home", "Features", "Templates", "Testimonials", "Contact"].map(
+            {["Home", "Features", "Testimonials", "Contact"].map(
               (item, index) => (
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className="hover:text-blue-600 transition-colors font-medium relative group"
+                  className="hover:text-blue-600 transition-colors font-medium relative group text-base" // Increased font size
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 + 0.5 }}
@@ -103,17 +126,19 @@ const Hero = () => {
             )}
           </div>
 
-          <div className="flex gap-3">
+          {/* CTA Buttons */}
+          <div className="flex items-center gap-3">
             {!user ? (
               <>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 }}
+                  className="hidden md:block"
                 >
                   <Link
                     to="/app?state=register"
-                    className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+                    className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 text-base" // Increased button text size
                   >
                     Get Started Free
                   </Link>
@@ -122,10 +147,11 @@ const Hero = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.9 }}
+                  className="hidden md:block"
                 >
                   <Link
                     to="/app?state=login"
-                    className="px-6 py-2.5 border border-slate-300 hover:border-blue-400 active:scale-95 hover:bg-white transition-all duration-300 rounded-xl text-slate-700 hover:text-slate-900 font-medium backdrop-blur-sm"
+                    className="px-6 py-2.5 border border-slate-300 hover:border-blue-400 active:scale-95 hover:bg-white transition-all duration-300 rounded-xl text-slate-700 hover:text-slate-900 font-medium backdrop-blur-sm text-base" // Increased button text size
                   >
                     Sign In
                   </Link>
@@ -139,32 +165,33 @@ const Hero = () => {
               >
                 <Link
                   to="/app"
-                  className="px-8 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+                  className="px-8 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 text-base whitespace-nowrap" // Increased button text size
                 >
                   Go to Dashboard
                 </Link>
               </motion.div>
             )}
-          </div>
 
-          <motion.button
-            onClick={() => setMenuOpen(true)}
-            className="md:hidden active:scale-90 transition p-2 rounded-lg bg-slate-100 hover:bg-blue-100"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="lucide lucide-menu text-slate-700"
+            {/* Mobile Menu Button */}
+            <motion.button
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden active:scale-90 transition p-2 rounded-lg bg-slate-100 hover:bg-blue-100"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <path d="M4 5h16M4 12h16M4 19h16" />
-            </svg>
-          </motion.button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="lucide lucide-menu text-slate-700"
+              >
+                <path d="M4 5h16M4 12h16M4 19h16" />
+              </svg>
+            </motion.button>
+          </div>
         </motion.nav>
 
         {/* Mobile Menu */}
@@ -181,27 +208,63 @@ const Hero = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl p-8 mx-4 flex flex-col items-center gap-6 shadow-2xl border border-blue-100"
+                className="bg-white rounded-2xl p-8 mx-4 flex flex-col items-center gap-6 shadow-2xl border border-blue-100 w-11/12 max-w-sm"
               >
-                {[
-                  "Home",
-                  "Features",
-                  "Templates",
-                  "Testimonials",
-                  "Contact",
-                ].map((item, index) => (
-                  <motion.a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="text-slate-800 hover:text-blue-600 font-medium text-xl transition-colors"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {item}
-                  </motion.a>
-                ))}
+                {/* Mobile Logo */}
+                <div className="flex items-center gap-3 mb-4">
+                  <img
+                    src="/logo.svg"
+                    alt="ResumeCraft Logo"
+                    className="h-12 w-auto"
+                  />
+                </div>
+
+                {["Home", "Features", "Testimonials", "Contact"].map(
+                  (item, index) => (
+                    <motion.a
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      className="text-slate-800 hover:text-blue-600 font-medium text-xl transition-colors w-full text-center py-2 border-b border-blue-50 last:border-b-0"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {item}
+                    </motion.a>
+                  )
+                )}
+
+                {/* Mobile Auth Buttons */}
+                <div className="flex flex-col gap-3 w-full mt-4">
+                  {!user ? (
+                    <>
+                      <Link
+                        to="/app?state=register"
+                        className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium text-center"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Get Started Free
+                      </Link>
+                      <Link
+                        to="/app?state=login"
+                        className="px-6 py-3 border border-slate-300 hover:border-blue-400 active:scale-95 hover:bg-white transition-all duration-300 rounded-xl text-slate-700 hover:text-slate-900 font-medium text-center"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                    </>
+                  ) : (
+                    <Link
+                      to="/app"
+                      className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium text-center"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Go to Dashboard
+                    </Link>
+                  )}
+                </div>
+
                 <motion.button
                   onClick={() => setMenuOpen(false)}
                   className="mt-4 p-3 bg-blue-500 hover:bg-blue-600 transition-colors text-white rounded-full"
@@ -225,11 +288,11 @@ const Hero = () => {
           )}
         </AnimatePresence>
 
-        {/* Hero Section */}
+        {/* Rest of the Hero content remains the same */}
         <motion.div
           variants={staggerContainer}
-          initial="hidden"
-          animate="show"
+          initial="initial"
+          animate="animate"
           className="relative flex flex-col items-center justify-center text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black pt-12"
         >
           {/* Floating Elements */}
@@ -320,19 +383,20 @@ const Hero = () => {
             variants={fadeInUp}
             className="text-5xl md:text-7xl font-bold max-w-6xl text-center mt-6 md:leading-[80px] bg-gradient-to-br from-slate-900 via-slate-800 to-blue-700 bg-clip-text text-transparent"
           >
-            Create Professional Resumes with{" "}
+            Land Your Dream Job with{" "}
             <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
-              AI Power
-            </span>
+              AI-Powered
+            </span>{" "}
+            Resumes
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
             className="max-w-2xl text-center text-lg text-slate-600 my-8 leading-relaxed"
           >
-            Build ATS-optimized, professional resumes that get you hired faster.
-            Our AI analyzes job descriptions and highlights your strengths to
-            match employer needs perfectly.
+            Create ATS-optimized, professional resumes that get you hired
+            faster. Our AI analyzes job descriptions and highlights your
+            strengths to match employer needs perfectly.
           </motion.p>
 
           {/* Stats Section */}
@@ -406,27 +470,6 @@ const Hero = () => {
                 </motion.svg>
               </motion.button>
             </Link>
-
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 border-2 border-slate-300 hover:border-blue-400 hover:bg-white transition-all duration-300 rounded-xl px-8 py-4 text-slate-700 hover:text-slate-900 font-semibold backdrop-blur-sm"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="lucide lucide-play-circle text-blue-500"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <polygon points="10 8 16 12 10 16 10 8" />
-              </svg>
-              <span>Watch Demo</span>
-            </motion.button>
           </motion.div>
 
           {/* Trusted By Section */}
@@ -458,13 +501,15 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      <style jsx>{`
-        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+      <style>
+        {`
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-        * {
-          font-family: "Inter", sans-serif;
-        }
-      `}</style>
+                    * {
+                        font-family: 'Inter', sans-serif;
+                    }
+                `}
+      </style>
     </>
   );
 };
