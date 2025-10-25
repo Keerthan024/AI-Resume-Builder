@@ -1,32 +1,22 @@
-// routes/userRouter.js
+// routes/authRoutes.js
 import express from "express";
-import {
-    getUserById,
-    getUserResumes,
-    loginUser,
-    registerUser
-} from "../controllers/userController.js";
-import protect from "../middlewares/authMiddleware.js";
 import { OAuth2Client } from 'google-auth-library';
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-const userRouter = express.Router();
-
-// Initialize Google OAuth client
+const router = express.Router();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// Public routes
-userRouter.post("/register", registerUser);
-userRouter.post("/login", loginUser);
-
 // Google OAuth route
-userRouter.post("/google-auth", async (req, res) => {
+router.post("/google-auth", async (req, res) => {
     try {
         const { credential } = req.body;
         
         if (!credential) {
-            return res.status(400).json({ message: 'No credential provided' });
+            return res.status(400).json({ 
+                success: false,
+                message: 'No credential provided' 
+            });
         }
 
         // Verify the Google ID token
@@ -39,7 +29,10 @@ userRouter.post("/google-auth", async (req, res) => {
         const { email, name, picture, sub: googleId } = payload;
 
         if (!email) {
-            return res.status(400).json({ message: 'Email not provided by Google' });
+            return res.status(400).json({ 
+                success: false,
+                message: 'Email not provided by Google' 
+            });
         }
 
         // Check if user exists in your database
@@ -77,6 +70,7 @@ userRouter.post("/google-auth", async (req, res) => {
         );
 
         res.json({
+            success: true,
             token,
             user: {
                 id: user._id,
@@ -89,12 +83,11 @@ userRouter.post("/google-auth", async (req, res) => {
 
     } catch (error) {
         console.error('Google auth error:', error);
-        res.status(400).json({ message: 'Google authentication failed' });
+        res.status(400).json({ 
+            success: false,
+            message: 'Google authentication failed' 
+        });
     }
 });
 
-// Protected routes (require authentication)
-userRouter.get("/data", protect, getUserById);
-userRouter.get("/resumes", protect, getUserResumes);
-
-export default userRouter;
+export default router;

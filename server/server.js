@@ -5,6 +5,7 @@ import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
+import authRouter from "./routes/authRoutes.js"; // Add this import
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -53,6 +54,7 @@ app.get("/", (req, res) => res.send("Server is live..."));
 app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
 app.use("/api/ai", aiRouter);
+app.use("/api/auth", authRouter);
 
 // --- 404 Handler ---
 app.use((req, res) => {

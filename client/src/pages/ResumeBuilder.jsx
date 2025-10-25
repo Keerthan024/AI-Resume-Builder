@@ -43,15 +43,16 @@ const ResumeBuilder = () => {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
   const [removeBackground, setRemoveBackground] = useState(false);
 
+  // ✅ Reordered sections according to MinimalTemplate
   const sections = [
     { id: "personal", name: "Personal Info", icon: User },
-    { id: "summary", name: "Summary", icon: FileText },
+    { id: "summary", name: "Professional Summary", icon: FileText },
     { id: "experience", name: "Experience", icon: Briefcase },
-    { id: "education", name: "Education", icon: GraduationCap },
+    { id: "skills", name: "Skills", icon: Sparkles },
     { id: "projects", name: "Projects", icon: FolderIcon },
     { id: "achievements", name: "Achievements", icon: Award },
     { id: "certifications", name: "Certifications", icon: BadgeCheck },
-    { id: "skills", name: "Skills", icon: Sparkles },
+    { id: "education", name: "Education", icon: GraduationCap },
   ]
 
   const activeSection = sections[activeSectionIndex]
@@ -178,8 +179,8 @@ const ResumeBuilder = () => {
                 {activeSection.id === 'experience' && (
                   <ExperienceForm data={resumeData.experience} onChange={(data) => setResumeData(prev => ({ ...prev, experience: data }))} />
                 )}
-                {activeSection.id === 'education' && (
-                  <EducationForm data={resumeData.education} onChange={(data) => setResumeData(prev => ({ ...prev, education: data }))} />
+                {activeSection.id === 'skills' && (
+                  <SkillsForm data={resumeData.skills} onChange={(data) => setResumeData(prev => ({ ...prev, skills: data }))} />
                 )}
                 {activeSection.id === 'projects' && (
                   <ProjectForm data={resumeData.project} onChange={(data) => setResumeData(prev => ({ ...prev, project: data }))} />
@@ -190,8 +191,8 @@ const ResumeBuilder = () => {
                 {activeSection.id === 'certifications' && (
                   <CertificationForm data={resumeData.certification} onChange={(data) => setResumeData(prev => ({ ...prev, certification: data }))} />
                 )}
-                {activeSection.id === 'skills' && (
-                  <SkillsForm data={resumeData.skills} onChange={(data) => setResumeData(prev => ({ ...prev, skills: data }))} />
+                {activeSection.id === 'education' && (
+                  <EducationForm data={resumeData.education} onChange={(data) => setResumeData(prev => ({ ...prev, education: data }))} />
                 )}
               </div>
 

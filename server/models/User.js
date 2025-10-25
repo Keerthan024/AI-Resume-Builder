@@ -1,16 +1,45 @@
+// models/User.js
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt'
 
-const UserSchema = new mongoose.Schema({
-    name: {type: String, required: true },
-    email: {type: String, required: true, unique: true },
-    password: {type: String, required: true },
-}, {timestamps: true })
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        // Make password optional for Google OAuth users
+        required: function() {
+            return !this.googleId; // Only required if not using Google OAuth
+        }
+    },
+    googleId: {
+        type: String,
+        sparse: true // Allows multiple nulls but enforces uniqueness for non-null values
+    },
+    avatar: {
+        type: String
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
+});
 
-UserSchema.methods.comparePassword = function (password){
-    return bcrypt.compareSync(password, this.password)
-}
+// Compound index to ensure email uniqueness
+userSchema.index({ email: 1 }, { unique: true });
 
-const User = mongoose.model("User", UserSchema)
+// Index for Google ID
+userSchema.index({ googleId: 1 }, { sparse: true });
 
-export default User;
+export default mongoose.model('User', userSchema);

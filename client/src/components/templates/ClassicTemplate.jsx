@@ -137,33 +137,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* 5. Education */}
-            {data.education && data.education.length > 0 && (
-                <section className="mb-1">
-                    <h2 className="text-l font-semibold mb-0.5" style={{ color: accentColor }}>
-                        EDUCATION
-                    </h2>
-
-                    <div className="space-y-2">
-                        {data.education.map((edu, index) => (
-                            <div key={index} className="flex justify-between items-start">
-                                <div>
-                                    <h3 className="font-semibold text-gray-900">
-                                        {edu.degree} {edu.field && `in ${edu.field}`}
-                                    </h3>
-                                    <p className="text-gray-700">{edu.institution}</p>
-                                    {edu.gpa && <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>}
-                                </div>
-                                <div className="text-sm text-gray-600">
-                                    <p>{formatDate(edu.graduation_date)}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
-
-            {/* 6. Achievements */}
+            {/* 5. Achievements */}
             {data.achievement && data.achievement.length > 0 && (
                 <section className="mb-1">
                     <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
@@ -181,7 +155,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* 7. Certifications */}
+            {/* 6. Certifications */}
             {data.certification && data.certification.length > 0 && (
                 <section className="mb-1">
                     <h2 className="text-l font-semibold mb-1" style={{ color: accentColor }}>
@@ -213,6 +187,32 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             </li>
                         ))}
                     </ul>
+                </section>
+            )}
+
+            {/* 7. Education */}
+            {data.education && data.education.length > 0 && (
+                <section className="mb-1">
+                    <h2 className="text-l font-semibold mb-0.5" style={{ color: accentColor }}>
+                        EDUCATION
+                    </h2>
+
+                    <div className="space-y-2">
+                        {data.education.map((edu, index) => (
+                            <div key={index} className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="font-semibold text-gray-900">
+                                        {edu.degree} {edu.field && `in ${edu.field}`}
+                                    </h3>
+                                    <p className="text-gray-700">{edu.institution}</p>
+                                    {edu.gpa && <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>}
+                                </div>
+                                <div className="text-sm text-gray-600">
+                                    <p>{formatDate(edu.graduation_date)}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </section>
             )}
         </div>
