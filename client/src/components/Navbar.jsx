@@ -80,17 +80,17 @@ const Navbar = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-0"
+              className="flex items-center gap-1.5"
             >
               <img
                 src="/favicon.svg"
                 alt="Logo"
-                className="h-10 w-auto md:h-8 lg:h-14"
+                className="h-12 w-auto md:h-8 lg:h-14"
               />
               <img
                 src="/logo.svg"
                 alt="Logo"
-                className="h-5 w-auto md:h-8 lg:h-10"
+                className="h-9 w-23 md:h-8 lg:h-10"
               />
             </motion.div>
           </Link>

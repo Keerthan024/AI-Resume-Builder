@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     googleId: {
         type: String,
-        sparse: true // Allows multiple nulls but enforces uniqueness for non-null values
+        sparse: true 
     },
     avatar: {
         type: String
@@ -31,15 +31,11 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 }, {
     timestamps: true
 });
-
-// Compound index to ensure email uniqueness
-userSchema.index({ email: 1 }, { unique: true });
-
-// Index for Google ID
-userSchema.index({ googleId: 1 }, { sparse: true });
 
 export default mongoose.model('User', userSchema);

@@ -1,10 +1,13 @@
 // routes/userRouter.js
 import express from "express";
 import {
+    forgotPassword,
     getUserById,
     getUserResumes,
     loginUser,
-    registerUser
+    registerUser,
+    resetPassword,
+    verifyResetToken
 } from "../controllers/userController.js";
 import protect from "../middlewares/authMiddleware.js";
 import { OAuth2Client } from 'google-auth-library';
@@ -19,6 +22,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 // Public routes
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
+userRouter.post("/forgot-password", forgotPassword);
+userRouter.post("/reset-password", resetPassword);
+userRouter.post("/verify-reset-token", verifyResetToken);
 
 // Google OAuth route
 userRouter.post("/google-auth", async (req, res) => {
