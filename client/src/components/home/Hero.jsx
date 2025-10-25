@@ -399,34 +399,6 @@ const Hero = () => {
             strengths to match employer needs perfectly.
           </motion.p>
 
-          {/* Stats Section */}
-          <motion.div
-            variants={fadeInUp}
-            className="flex flex-wrap justify-center gap-8 my-8"
-          >
-            {[
-              { number: "95%", label: "Interview Rate" },
-              { number: "2.3x", label: "More Interviews" },
-              { number: "50+", label: "Templates" },
-              { number: "30s", label: "Build Time" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + index * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-2xl font-bold text-blue-600">
-                  {stat.number}
-                </div>
-                <div className="text-sm text-slate-500 font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
           {/* CTA Buttons */}
           <motion.div
             variants={fadeInUp}
