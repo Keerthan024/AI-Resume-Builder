@@ -33,9 +33,14 @@ const Navbar = () => {
 
   const menuItems = [
     {
-      icon: <HomeIcon className="w-4 h-4" />,
+      icon: <FileTextIcon className="w-4 h-4" />,
       label: "Dashboard",
       path: "/app",
+    },
+    {
+      icon: <HomeIcon className="w-4 h-4" />,
+      label: "Home",
+      path: "/",
     },
   ];
 

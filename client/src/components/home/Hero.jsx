@@ -162,6 +162,7 @@ const Hero = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 }}
+                className="hidden md:block" // Added hidden md:block to hide on mobile
               >
                 <Link
                   to="/app"
@@ -255,6 +256,7 @@ const Hero = () => {
                       </Link>
                     </>
                   ) : (
+                    // Removed the "Go to Dashboard" button from mobile menu
                     <Link
                       to="/app"
                       className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition-all duration-300 rounded-xl text-white font-medium text-center"
